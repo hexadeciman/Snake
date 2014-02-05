@@ -45,12 +45,12 @@ class Window extends JFrame{
 		// initial position of the snake
 		Tuple position = new Tuple(10,10);
 		// passing this value to the controller
-		ControlleurThreads c = new ControlleurThreads(position);
+		ThreadsController c = new ThreadsController(position);
 		//Let's start the game now..
 		c.start();
 
 		// Links the window to the keyboardlistenner.
-		this.addKeyListener(new KeyboardListenner());
+		this.addKeyListener(new KeyboardListener());
 
 		//To do : handle multiplayers .. The above works, test it and see what happens
 		
