@@ -17,9 +17,9 @@ The code is well commented, if you have any questions or want to continue this p
 ###Procedure:
 
 * Just download the SnakeGame.jar file
-* run it 
-* start playing with the arrows keys. 
-* if you lose, just close it and re-open it (I will add a restart button possibly)
+* Run it 
+* Start playing with the arrows keys. 
+* If you lose, just close it and re-open it (I will add a restart button possibly)
 
 ##Preview:
 
