@@ -5,9 +5,9 @@ A simple snake game in java .
 Using Threads and Java Swing to display the game.
 The code is well commented, if you have any questions or want to continue this project feel free to do so :)
 
-##Controls:
+##Preview:
 
-* Arrows of the keyboard
+![alt tag](http://i62.tinypic.com/behbw3.png)
 
 ##How to run the game:
 
@@ -21,12 +21,7 @@ The code is well commented, if you have any questions or want to continue this p
 * Start playing with the arrows keys. 
 * If you lose, just close it and re-open it (I will add a restart button possibly)
 
-##Preview:
 
-
-
-
-![alt tag](http://i62.tinypic.com/behbw3.png)
 
 
 Made in a couple of hours ..
