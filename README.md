@@ -9,6 +9,15 @@ The code is well commented, if you have any questions or want to continue this p
 
 * Arrows of the keyboard
 
+##How to run the game:
+
+###Requirements:
+* Java runtime installed
+
+###Procedure:
+
+* Just download the SnakeGame.jar file, run it start playing. if you lose, just close it and re-open it (I will add a restart button)
+
 ##Preview:
 
 
