@@ -1,11 +1,12 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
- public class KeyboardListener implements KeyListener{//1:right 2:left 3:top 4:bottom 0:nothing
-	 
-    public void keyPressed(KeyEvent event) {
-    	
-    	switch(event.getKeyCode()){
+ public class KeyboardListener(){
+ 	
+ 	addKeyListener(new KeyAdapter(){
+ 		 		@Override
+ 		public void keyPressed(KeyEvent e){
+ 		    	switch(event.getKeyCode()){
 	    	case 39:	//System.out.println("Right"); 
 	    				if(ThreadsController.directionSnake!=2)
 	    					ThreadsController.directionSnake=1;
@@ -25,11 +26,7 @@ import java.awt.event.KeyListener;
 							ThreadsController.directionSnake=4;
 	    				break;
 	    	default: 	break;
-	    				
-    	}
-    }
-    
-    //methods that needs to be here because I implemented KeyListenner
-    public void keyReleased(KeyEvent event) {}
-    public void keyTyped(KeyEvent event) {}
-}   
+ 		    	}
+ 		}
+ 	});
+ }
