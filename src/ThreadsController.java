@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 //Controls all the game logic .. most important class in this project.
 public class ThreadsController extends Thread {
-	 ArrayList<ArrayList<ThreadSquare>> Squares= new ArrayList<ArrayList<ThreadSquare>>();
+	 ArrayList<ArrayList<DataOfSquare>> Squares= new ArrayList<ArrayList<DataOfSquare>>();
 	 Tuple headSnakePos;
 	 int sizeSnake=3;
 	 long speed = 50;
@@ -15,7 +15,7 @@ public class ThreadsController extends Thread {
 	 //Constructor of ControlleurThread 
 	 ThreadsController(Tuple positionDepart){
 		//Get all the threads
-		Squares=Window.Threads;
+		Squares=Window.Grid;
 		
 		headSnakePos=new Tuple(positionDepart.x,positionDepart.y);
 		directionSnake = 1;
@@ -79,7 +79,7 @@ public class ThreadsController extends Thread {
 	 
 	 //Put food in a position and displays it
 	 private void spawnFood(Tuple foodPositionIn){
-		 	Squares.get(foodPositionIn.x).get(foodPositionIn.y).square.lightMeUp(1);
+		 	Squares.get(foodPositionIn.x).get(foodPositionIn.y).lightMeUp(1);
 	 }
 	 
 	 //return a position not occupied by the snake
@@ -138,8 +138,7 @@ public class ThreadsController extends Thread {
 		 for(Tuple t : positions){
 			 int y = t.getX();
 			 int x = t.getY();
-			 Squares.get(x).get(y).pauseThread();
-			 Squares.get(x).get(y).square.lightMeUp(0);
+			 Squares.get(x).get(y).lightMeUp(0);
 			 
 		 }
 	 }
@@ -151,8 +150,7 @@ public class ThreadsController extends Thread {
 		 for(int i = positions.size()-1;i>=0;i--){
 			 if(cmpt==0){
 				 Tuple t = positions.get(i);
-				 Squares.get(t.y).get(t.x).square.lightMeUp(2);
-				 Squares.get(t.y).get(t.x).pauseThread();
+				 Squares.get(t.y).get(t.x).lightMeUp(2);
 			 }
 			 else{
 				 cmpt--;
