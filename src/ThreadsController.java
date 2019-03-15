@@ -1,12 +1,15 @@
 import java.util.ArrayList;
-
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 //Controls all the game logic .. most important class in this project.
 public class ThreadsController extends Thread {
 	 ArrayList<ArrayList<DataOfSquare>> Squares= new ArrayList<ArrayList<DataOfSquare>>();
 	 Tuple headSnakePos;
-	 int sizeSnake=3;
-	 long speed = 50;
+	 int sizeSnake=10;
+	 int v=0;
+	 Tuple finishposition;
+	 long speed = 100;
 	 public static int directionSnake ;
 
 	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
@@ -63,8 +66,10 @@ public class ThreadsController extends Thread {
 		 if(eatingFood){
 			 System.out.println("Yummy!");
 			 sizeSnake=sizeSnake+1;
-			 	foodPosition = getValAleaNotInSnake();
-
+			 v=v+10;
+			 System.out.println(v);
+			 foodPosition = getValAleaNotInSnake();
+			 
 			 spawnFood(foodPosition);	
 		 }
 	 }
@@ -72,7 +77,20 @@ public class ThreadsController extends Thread {
 	 //Stops The Game
 	 private void stopTheGame(){
 		 System.out.println("COLISION! \n");
+		 System.out.println("Game over");
+		 System.out.println(v);
+		 finishposition=new Tuple(5,5);
+		 JFrame newFrame = new JFrame();
+		 newFrame.setSize(200,200);
+		 JLabel p=new JLabel();
+		 p.setText("Game over . Total score is :"+v);
+		 newFrame.add(p);
+		 newFrame.setVisible(true);
 		 while(true){
+			 //spawnFood(finishposition);
+			 //we have the position where to display
+			 //g.setVisible(true);
+			 
 			 pauser();
 		 }
 	 }
@@ -81,6 +99,10 @@ public class ThreadsController extends Thread {
 	 private void spawnFood(Tuple foodPositionIn){
 		 	Squares.get(foodPositionIn.x).get(foodPositionIn.y).lightMeUp(1);
 	 }
+	 
+	 
+	 
+	 
 	 
 	 //return a position not occupied by the snake
 	 private Tuple getValAleaNotInSnake(){

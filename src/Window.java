@@ -3,6 +3,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 
 class Window extends JFrame{
@@ -11,6 +12,12 @@ class Window extends JFrame{
 	public static int width = 20;
 	public static int height = 20;
 	public Window(){
+		
+		
+		//JLabel g = new JLabel();
+		//g.setText("GAME OVER");
+		//g.setLocation(5,5);
+		//g.setVisible(true);
 		
 		
 		// Creates the arraylist that'll contain the threads
@@ -25,7 +32,10 @@ class Window extends JFrame{
 				data.add(c);
 			}
 			Grid.add(data);
+			
 		}
+		
+		
 		
 		// Setting up the layout of the panel
 		getContentPane().setLayout(new GridLayout(20,20,0,0));
