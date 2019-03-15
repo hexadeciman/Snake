@@ -14,10 +14,7 @@ class Window extends JFrame{
 	public Window(){
 		
 		
-		//JLabel g = new JLabel();
-		//g.setText("GAME OVER");
-		//g.setLocation(5,5);
-		//g.setVisible(true);
+	
 		
 		
 		// Creates the arraylist that'll contain the threads
