@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 public class ThreadsController extends Thread {
 	 ArrayList<ArrayList<DataOfSquare>> Squares= new ArrayList<ArrayList<DataOfSquare>>();
 	 Tuple headSnakePos;
-	 int sizeSnake=10;
+	 int sizeSnake=3;
 	 int v=0;
 	 Tuple finishposition;
 	 long speed = 100;
@@ -79,7 +79,6 @@ public class ThreadsController extends Thread {
 		 System.out.println("COLISION! \n");
 		 System.out.println("Game over");
 		 System.out.println(v);
-		 finishposition=new Tuple(5,5);
 		 JFrame newFrame = new JFrame();
 		 newFrame.setSize(200,200);
 		 JLabel p=new JLabel();
@@ -87,10 +86,6 @@ public class ThreadsController extends Thread {
 		 newFrame.add(p);
 		 newFrame.setVisible(true);
 		 while(true){
-			 //spawnFood(finishposition);
-			 //we have the position where to display
-			 //g.setVisible(true);
-			 
 			 pauser();
 		 }
 	 }
