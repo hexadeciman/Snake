@@ -3,16 +3,15 @@ import java.util.ArrayList;
 
 //Controls all the game logic .. most important class in this project.
 public class ThreadsController extends Thread {
-	 ArrayList<ArrayList<DataOfSquare>> Squares= new ArrayList<ArrayList<DataOfSquare>>();
-	 Tuple headSnakePos;
-	 int sizeSnake=3;
-	 long speed = 50;
-	 public static int directionSnake ;
+	 private ArrayList<ArrayList<DataOfSquare>> Squares;
+	 private Tuple headSnakePos;
+	 private int sizeSnake = 3;
 
-	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
-	 Tuple foodPosition;
+	 protected static int directionSnake;
+	 private ArrayList<Tuple> positions = new ArrayList<>();
+	 private Tuple foodPosition;
 	 
-	 //Constructor of ControlleurThread 
+	 //Constructor of ControllerThread
 	 ThreadsController(Tuple positionDepart){
 		//Get all the threads
 		Squares=Window.Grid;
@@ -30,18 +29,23 @@ public class ThreadsController extends Thread {
 	 }
 	 
 	 //Important part :
-	 public void run() {
-		 while(true){
-			 moveInterne(directionSnake);
-			 checkCollision();
-			 moveExterne();
-			 deleteTail();
-			 pauser();
-		 }
+	 public void run(){
+		 do{
+		 	try{
+				moveInterne(directionSnake);
+				checkCollision();
+				moveExterne();
+				deleteTail();
+				pauser();
+			}catch (Exception e){
+		 		e.printStackTrace();
+			}
+		 }while(true);
 	 }
 	 
 	 //delay between each move of the snake
 	 private void pauser(){
+	 	long speed = 50;
 		 try {
 				sleep(speed);
 		 } catch (InterruptedException e) {
@@ -72,9 +76,13 @@ public class ThreadsController extends Thread {
 	 //Stops The Game
 	 private void stopTheGame(){
 		 System.out.println("COLISION! \n");
-		 while(true){
-			 pauser();
-		 }
+		 do{
+		 	try {
+		 		pauser();
+			}catch (Exception e){
+		 		e.printStackTrace();
+			}
+		 }while (true);
 	 }
 	 
 	 //Put food in a position and displays it
@@ -85,13 +93,13 @@ public class ThreadsController extends Thread {
 	 //return a position not occupied by the snake
 	 private Tuple getValAleaNotInSnake(){
 		 Tuple p ;
-		 int ranX= 0 + (int)(Math.random()*19); 
-		 int ranY= 0 + (int)(Math.random()*19); 
+		 int ranX= (int) (Math.random() * 19);
+		 int ranY= (int) (Math.random() * 19);
 		 p=new Tuple(ranX,ranY);
 		 for(int i = 0;i<=positions.size()-1;i++){
 			 if(p.getY()==positions.get(i).getX() && p.getX()==positions.get(i).getY()){
-				 ranX= 0 + (int)(Math.random()*19); 
-				 ranY= 0 + (int)(Math.random()*19); 
+				 ranX= (int) (Math.random() * 19);
+				 ranY= (int) (Math.random() * 19);
 				 p=new Tuple(ranX,ranY);
 				 i=0;
 			 }
