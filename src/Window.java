@@ -10,9 +10,10 @@ class Window extends JFrame{
 	public static ArrayList<ArrayList<DataOfSquare>> Grid;
 	public static int width = 20;
 	public static int height = 20;
+	private ThreadsController controllerThread;
 	public Window(){
 		
-		
+
 		// Creates the arraylist that'll contain the threads
 		Grid = new ArrayList<ArrayList<DataOfSquare>>();
 		ArrayList<DataOfSquare> data;
@@ -26,7 +27,7 @@ class Window extends JFrame{
 			}
 			Grid.add(data);
 		}
-		
+
 		// Setting up the layout of the panel
 		getContentPane().setLayout(new GridLayout(20,20,0,0));
 		
@@ -36,13 +37,13 @@ class Window extends JFrame{
 				getContentPane().add(Grid.get(i).get(j).square);
 			}
 		}
-		
+
 		// initial position of the snake
 		Tuple position = new Tuple(10,10);
 		// passing this value to the controller
-		ThreadsController c = new ThreadsController(position);
+		controllerThread = new ThreadsController(position);
 		//Let's start the game now..
-		c.start();
+		controllerThread.start();
 
 		// Links the window to the keyboardlistenner.
 		this.addKeyListener((KeyListener) new KeyboardListener());
@@ -53,5 +54,13 @@ class Window extends JFrame{
 		//ControlleurThreads c2 = new ControlleurThreads(position2);
 		//c2.start();
 		
+	}
+
+	public void waitForGameEnd() {
+		try {
+			controllerThread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

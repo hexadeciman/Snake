@@ -8,6 +8,7 @@ public class ThreadsController extends Thread {
 	 int sizeSnake=3;
 	 long speed = 50;
 	 public static SnakeDirections snakeDirection;
+	 private boolean gameOver = false;
 
 	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
 	 Tuple foodPosition;
@@ -31,7 +32,7 @@ public class ThreadsController extends Thread {
 
 	 //Important part :
 	 public void run() {
-		 while(true){
+		 while(!gameOver){
 			 moveInterne(snakeDirection);
 			 checkCollision();
 			 moveExterne();
@@ -72,9 +73,7 @@ public class ThreadsController extends Thread {
 	 //Stops The Game
 	 private void stopTheGame(){
 		 System.out.println("COLISION! \n");
-		 while(true){
-			 pauser();
-		 }
+		 gameOver = true;
 	 }
 
 	 //Put food in a position and displays it
