@@ -23,6 +23,7 @@ public class Main {
 			//Setting up the window settings
 			currentWindow.setTitle("Snake attempt " + attempt++);
 			currentWindow.setSize(300,300);
+			currentWindow.setLocationRelativeTo(null);
 			currentWindow.setVisible(true);
 			currentWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
