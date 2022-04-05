@@ -1,4 +1,4 @@
-name: JAdventure unit tests
+name: Maven: run unit tests
 
 on:
   push:
