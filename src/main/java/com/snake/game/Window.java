@@ -12,7 +12,7 @@ class Window extends JFrame{
     public static ArrayList<ArrayList<DataOfSquare>> Grid;
     public static int width = 20;
     public static int height = 20;
-    public Window(){
+    public Window(String gamemode){ // TODO: implement gamemodes
 
 
         // Creates the arraylist that'll contain the threads
