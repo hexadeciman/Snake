@@ -10,7 +10,7 @@ public class WindowTest {
 
     @Before
     public void setUp() {
-        window = new Window();
+        window = new Window("one");
     }
 
     @Test
