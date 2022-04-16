@@ -1,23 +1,12 @@
-package test.java.com.snake.game;
+package com.snake.game;
 
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.awt.Color;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SquarePanelTest {
-
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
 
     @Test
     public void SquarePanelSetUp() {

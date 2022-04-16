@@ -1,34 +1,27 @@
-package test.java.com.snake.game;
+package com.snake.game;
 
-import com.snake.game.DataOfSquare;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.awt.Color;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DataOfSquareTest {
+    DataOfSquare s;
 
     @BeforeEach
     void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
+        s = new DataOfSquare(0);
     }
 
     @Test
-    public void DataOfSquareTest() {
-        com.snake.game.DataOfSquare s = new com.snake.game.DataOfSquare(0);
+    public void DefaultColorTest() {
         assertEquals(Color.darkGray, s.getSquare().getColor());
     }
 
     @Test
     public void MultipleColors() {
-        com.snake.game.DataOfSquare s = new com.snake.game.DataOfSquare(0);
         assertEquals(Color.darkGray, s.getSquare().getColor());
         s.lightMeUp(1);
         assertEquals(Color.BLUE, s.getSquare().getColor());
