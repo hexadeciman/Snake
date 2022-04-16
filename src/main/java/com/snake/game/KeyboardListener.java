@@ -9,25 +9,50 @@ public class KeyboardListener extends KeyAdapter{
         switch(e.getKeyCode()){
             case 39:	// -> Right
                 //if it's not the opposite direction
-                if(ThreadsController.directionSnake!=2)
-                    ThreadsController.directionSnake=1;
+                if(ThreadsController.snakeDirection1!=2)
+                    ThreadsController.snakeDirection1=1;
                 break;
             case 38:	// -> Top
-                if(ThreadsController.directionSnake!=4)
-                    ThreadsController.directionSnake=3;
+                if(ThreadsController.snakeDirection1!=4)
+                    ThreadsController.snakeDirection1=3;
                 break;
 
             case 37: 	// -> Left
-                if(ThreadsController.directionSnake!=1)
-                    ThreadsController.directionSnake=2;
+                if(ThreadsController.snakeDirection1!=1)
+                    ThreadsController.snakeDirection1=2;
                 break;
 
             case 40:	// -> Bottom
-                if(ThreadsController.directionSnake!=3)
-                    ThreadsController.directionSnake=4;
+                if(ThreadsController.snakeDirection1!=3)
+                    ThreadsController.snakeDirection1=4;
                 break;
 
             default: 	break;
+        }
+        if (Window.gamemode == "two"){
+            switch(e.getKeyCode()){
+                case 68:	// -> Right
+                    //if it's not the opposite direction
+                    if(ThreadsController.snakeDirection2!=2)
+                        ThreadsController.snakeDirection2=1;
+                    break;
+                case 87:	// -> Top
+                    if(ThreadsController.snakeDirection2!=4)
+                        ThreadsController.snakeDirection2=3;
+                    break;
+    
+                case 65: 	// -> Left
+                    if(ThreadsController.snakeDirection2!=1)
+                        ThreadsController.snakeDirection2=2;
+                    break;
+    
+                case 83:	// -> Bottom
+                    if(ThreadsController.snakeDirection2!=3)
+                        ThreadsController.snakeDirection2=4;
+                    break;
+    
+                default: 	break;
+            }
         }
     }
 

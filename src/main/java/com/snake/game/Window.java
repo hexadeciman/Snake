@@ -12,8 +12,8 @@ class Window extends JFrame{
     public static ArrayList<ArrayList<DataOfSquare>> Grid;
     public static int width = 20;
     public static int height = 20;
-    public Window(){
-
+    public static String gamemode;
+    public Window(){ 
 
         // Creates the arraylist that'll contain the threads
         Grid = new ArrayList<ArrayList<DataOfSquare>>();
@@ -39,10 +39,8 @@ class Window extends JFrame{
             }
         }
 
-        // initial position of the snake
-        Tuple position = new Tuple(10,10);
         // passing this value to the controller
-        ThreadsController c = new ThreadsController(position);
+        ThreadsController c = new ThreadsController(new Tuple(5,5), new Tuple(15,15));
         //Let's start the game now..
         c.start();
 
