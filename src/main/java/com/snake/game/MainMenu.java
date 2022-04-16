@@ -47,7 +47,8 @@ public class MainMenu extends JFrame{
     }
 
     private void startGame(ActionEvent e, String gamemode){
-        Window game = new Window(gamemode);
+        Window.gamemode = gamemode;
+        Window game = new Window();
 
         game.setTitle("Snake");
         game.setSize(300,300);
