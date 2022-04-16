@@ -11,18 +11,18 @@ public class KeyboardListenerTest {
 
     @Test
     public void RightFromUp() {
-        ThreadsController.directionSnake = 3;
+        ThreadsController.snakeDirection1 = 3;
         KeyboardListener k = new KeyboardListener();
         k.keyPressed(new KeyEvent(new Button(), KeyEvent.VK_RIGHT, 100, 0, KeyEvent.VK_RIGHT, (char)39));
-        assertEquals(1, ThreadsController.directionSnake);
+        assertEquals(1, ThreadsController.snakeDirection1);
     }
 
     @Test
     public void RightFromLeft() {
-        ThreadsController.directionSnake = 2;
+        ThreadsController.snakeDirection1 = 2;
         KeyboardListener k = new KeyboardListener();
         k.keyPressed(new KeyEvent(new Button(), KeyEvent.VK_RIGHT, 100, 0, KeyEvent.VK_RIGHT, (char)39));
-        assertEquals(2, ThreadsController.directionSnake);
+        assertEquals(2, ThreadsController.snakeDirection1);
     }
 
 }
