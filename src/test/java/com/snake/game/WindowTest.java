@@ -1,14 +1,14 @@
 package com.snake.game;
 
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WindowTest {
     Window window;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         window = new Window();
     }

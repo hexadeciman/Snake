@@ -1,15 +1,15 @@
 package com.snake.game;
 
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TupleTest {
     Tuple t;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         t = new Tuple(0, 0);
     }
 

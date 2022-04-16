@@ -1,7 +1,7 @@
 package com.snake.game;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.awt.Color;
 
@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DataOfSquareTest {
     DataOfSquare s;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         s = new DataOfSquare(0);
     }
 
