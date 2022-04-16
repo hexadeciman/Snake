@@ -1,7 +1,7 @@
 package com.snake.game;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.Before;
 
 import static org.junit.jupiter.api.Assertions.*;
 

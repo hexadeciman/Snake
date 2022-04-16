@@ -15,5 +15,5 @@ public class SquarePanel extends JPanel{
         this.setBackground(d);
         this.repaint();
     }
-
+    public Color getColor(){return this.getBackground();}
 }
