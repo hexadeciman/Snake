@@ -22,5 +22,4 @@ public class DataOfSquare {
     public void lightMeUp(int c){
         square.ChangeColor(C.get(c));
     }
-    public SquarePanel getSquare(){return square;}
 }
