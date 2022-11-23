@@ -22,3 +22,10 @@ The code is well commented, if you have any questions or want to continue this p
 * Start playing with the arrows keys. 
 * If you lose, just close it and re-open it (I will add a restart button possibly)
 
+### Mentions
+#### Blog Posts:
+- [hackr.io](https://hackr.io/blog/java-projects)
+- [NullClass](https://nullclass.com/free-java-projects-for-beginners-2021-with-source-code/)
+
+#### Academia:
+- [NCU CSIE Taiwan Uni.](https://www.csie.ntu.edu.tw/~d00922011/java/304/java.html)
