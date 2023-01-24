@@ -1,16 +1,23 @@
-import java.util.ArrayList;
+package snakegame;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 //Controls all the game logic .. most important class in this project.
 public class ThreadsController extends Thread {
 	 ArrayList<ArrayList<DataOfSquare>> Squares= new ArrayList<ArrayList<DataOfSquare>>();
 	 Tuple headSnakePos;
-	 int sizeSnake=3;
-	 long speed = 50;
+         
+         
+	 int sizeSnakeFromMenu=settingsMenu.snakeSizeI; //These are all the new obtained value from the settings menu
+	 int speedFromMenu = settingsMenu.snakeSpeedI;
+         int growthFromSetting = settingsMenu.snakeGrowthI;
 	 public static int directionSnake ;
+         public static boolean closeGameWindow = false;
 
 	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
 	 Tuple foodPosition;
+         
 	 
 	 //Constructor of ControlleurThread 
 	 ThreadsController(Tuple positionDepart){
@@ -24,8 +31,10 @@ public class ThreadsController extends Thread {
 		Tuple headPos = new Tuple(headSnakePos.getX(),headSnakePos.getY());
 		positions.add(headPos);
 		
-		foodPosition= new Tuple(Window.height-1,Window.width-1);
+		foodPosition= new Tuple(settingsMenu.blockHeightI-3,settingsMenu.blockWidthI-3);
+                
 		spawnFood(foodPosition);
+                 
 
 	 }
 	 
@@ -43,12 +52,22 @@ public class ThreadsController extends Thread {
 	 //delay between each move of the snake
 	 private void pauser(){
 		 try {
-				sleep(speed);
+				sleep(speedFromMenu);
 		 } catch (InterruptedException e) {
 				e.printStackTrace();
 		 }
 	 }
-	 
+	 private int RandoColor(){
+             Double randoColor = Math.random() * 10;
+             Integer randoColor2 = randoColor.intValue();
+             if (randoColor2 >= 3 && randoColor2 <=8){
+                 return randoColor2;
+             }
+             else {
+                return  5;
+             }
+           
+         }
 	 //Checking if the snake bites itself or is eating
 	 private void checkCollision() {
 		 Tuple posCritique = positions.get(positions.size()-1);
@@ -59,39 +78,61 @@ public class ThreadsController extends Thread {
 			 }
 		 }
 		 
+                 if (settingsMenu.wallsOn){ //checks if the wall box is checked 
+                    boolean wallCollision = posCritique.getX()==0 || posCritique.getY()==0 // checks if the snake is 1. on the left side 2. on the bottom 
+                        || posCritique.getX()==settingsMenu.blockHeightI-1 || posCritique.getY()== settingsMenu.blockWidthI-1;//3. on the right 4. on the top
+                    if (wallCollision){ //if any of these conditions are met, stop the game
+                        stopTheGame();
+                    }
+                }
+                 
 		 boolean eatingFood = posCritique.getX()==foodPosition.y && posCritique.getY()==foodPosition.x;
 		 if(eatingFood){
-			 System.out.println("Yummy!");
-			 sizeSnake=sizeSnake+1;
+			 sizeSnakeFromMenu=sizeSnakeFromMenu+growthFromSetting;
 			 	foodPosition = getValAleaNotInSnake();
 
-			 spawnFood(foodPosition);	
+			 spawnFood(foodPosition);
+                         
 		 }
 	 }
-	 
-	 //Stops The Game
+	 mainMenu Again;
+	 //Stops The Game and gives user another chance
 	 private void stopTheGame(){
-		 System.out.println("COLISION! \n");
-		 while(true){
-			 pauser();
-		 }
-	 }
+		
+                int tryAgain = JOptionPane.showConfirmDialog(null, "You died! Would you like to play again?");
+                //this shows a dialog box and gives the user the option to press "Yes" "No" or "Cancel"
+                
+                if (tryAgain == 0){
+                    //If the user presses yes
+                    Again = new mainMenu();
+                    Again.setSize(325, 265);
+                    Again.setVisible(true);
+                    //Make a new mainMenu appear
+                    this.closeGameWindow = true;
+                }
+                
+		while(true){
+			pauser();
+		}
+	}
 	 
 	 //Put food in a position and displays it
 	 private void spawnFood(Tuple foodPositionIn){
-		 	Squares.get(foodPositionIn.x).get(foodPositionIn.y).lightMeUp(1);
+                        
+		 	Squares.get(foodPositionIn.x).get(foodPositionIn.y).lightMeUp(RandoColor());
+                        
 	 }
 	 
 	 //return a position not occupied by the snake
 	 private Tuple getValAleaNotInSnake(){
 		 Tuple p ;
-		 int ranX= 0 + (int)(Math.random()*19); 
-		 int ranY= 0 + (int)(Math.random()*19); 
+		 int ranX= 1 + (int)(Math.random()*17); 
+		 int ranY= 1 + (int)(Math.random()*17); 
 		 p=new Tuple(ranX,ranY);
 		 for(int i = 0;i<=positions.size()-1;i++){
 			 if(p.getY()==positions.get(i).getX() && p.getX()==positions.get(i).getY()){
-				 ranX= 0 + (int)(Math.random()*19); 
-				 ranY= 0 + (int)(Math.random()*19); 
+				 ranX= 1 + (int)(Math.random()*17); 
+				 ranY= 1 + (int)(Math.random()*17); 
 				 p=new Tuple(ranX,ranY);
 				 i=0;
 			 }
@@ -104,30 +145,30 @@ public class ThreadsController extends Thread {
 	 private void moveInterne(int dir){
 		 switch(dir){
 		 	case 4:
-				 headSnakePos.ChangeData(headSnakePos.x,(headSnakePos.y+1)%20);
+				 headSnakePos.ChangeData(headSnakePos.x,(headSnakePos.y+1)%settingsMenu.blockHeightI);
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		break;
 		 	case 3:
 		 		if(headSnakePos.y-1<0){
-		 			 headSnakePos.ChangeData(headSnakePos.x,19);
+		 			 headSnakePos.ChangeData(headSnakePos.x,settingsMenu.blockHeightI-1);
 		 		 }
 		 		else{
-				 headSnakePos.ChangeData(headSnakePos.x,Math.abs(headSnakePos.y-1)%20);
+				 headSnakePos.ChangeData(headSnakePos.x,Math.abs(headSnakePos.y-1)%settingsMenu.blockHeightI);
 		 		}
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		break;
 		 	case 2:
 		 		 if(headSnakePos.x-1<0){
-		 			 headSnakePos.ChangeData(19,headSnakePos.y);
+		 			 headSnakePos.ChangeData(settingsMenu.blockWidthI-1,headSnakePos.y);
 		 		 }
 		 		 else{
-		 			 headSnakePos.ChangeData(Math.abs(headSnakePos.x-1)%20,headSnakePos.y);
+		 			 headSnakePos.ChangeData(Math.abs(headSnakePos.x-1)%settingsMenu.blockWidthI,headSnakePos.y);
 		 		 } 
 		 		positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 
 		 		break;
 		 	case 1:
-				 headSnakePos.ChangeData(Math.abs(headSnakePos.x+1)%20,headSnakePos.y);
+				 headSnakePos.ChangeData(Math.abs(headSnakePos.x+1)%settingsMenu.blockWidthI,headSnakePos.y);
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		 break;
 		 }
@@ -146,7 +187,7 @@ public class ThreadsController extends Thread {
 	 //Refreshes the tail of the snake, by removing the superfluous data in positions arraylist
 	 //and refreshing the display of the things that is removed
 	 private void deleteTail(){
-		 int cmpt = sizeSnake;
+		 int cmpt = sizeSnakeFromMenu;
 		 for(int i = positions.size()-1;i>=0;i--){
 			 if(cmpt==0){
 				 Tuple t = positions.get(i);
@@ -156,7 +197,7 @@ public class ThreadsController extends Thread {
 				 cmpt--;
 			 }
 		 }
-		 cmpt = sizeSnake;
+		 cmpt = sizeSnakeFromMenu;
 		 for(int i = positions.size()-1;i>=0;i--){
 			 if(cmpt==0){
 				 positions.remove(i);

@@ -1,3 +1,5 @@
+package snakegame;
+
 import java.awt.GridLayout;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -8,8 +10,8 @@ import javax.swing.JFrame;
 class Window extends JFrame{
 	private static final long serialVersionUID = -2542001418764869760L;
 	public static ArrayList<ArrayList<DataOfSquare>> Grid;
-	public static int width = 20;
-	public static int height = 20;
+	int width=settingsMenu.blockWidthI;
+	int height = settingsMenu.blockHeightI;
 	public Window(){
 		
 		
@@ -21,14 +23,20 @@ class Window extends JFrame{
 		for(int i=0;i<width;i++){
 			data= new ArrayList<DataOfSquare>();
 			for(int j=0;j<height;j++){
-				DataOfSquare c = new DataOfSquare(2);
-				data.add(c);
+                            if (settingsMenu.wallsOn && (i == 0 || i == width -1 || j ==0 || j == height -1)){ //this line selected the location of the walls
+                                   DataOfSquare c = new DataOfSquare(0); //this changed the color of those areas to black
+				   data.add(c);// set input those colors into "data", an array containing the color of all squares.
+                                 }
+                            else {
+				   DataOfSquare c = new DataOfSquare(2);
+				   data.add(c);
+                            }
 			}
-			Grid.add(data);
+                        Grid.add(data);
 		}
 		
 		// Setting up the layout of the panel
-		getContentPane().setLayout(new GridLayout(20,20,0,0));
+		getContentPane().setLayout(new GridLayout(height,width,0,0));
 		
 		// Start & pauses all threads, then adds every square of each thread to the panel
 		for(int i=0;i<width;i++){
@@ -43,7 +51,7 @@ class Window extends JFrame{
 		ThreadsController c = new ThreadsController(position);
 		//Let's start the game now..
 		c.start();
-
+                
 		// Links the window to the keyboardlistenner.
 		this.addKeyListener((KeyListener) new KeyboardListener());
 
