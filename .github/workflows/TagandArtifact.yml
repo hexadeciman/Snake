@@ -1,0 +1,34 @@
+name: Auto Tag my Application
+on:
+  push:
+    branches:
+      - main
+
+concurrency: production
+
+jobs:
+  Patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Minor version for each merge
+        id: autotagger
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          INITIAL_VERSION: 1.0.0
+          DRY_RUN: true
+
+      - name: echo new tag
+        run: |
+          echo "The next tag version will be: ${{ steps.autotagger.outputs.new_tag }}"
+      - name: echo tag
+        run: |
+          echo "The current tag is: ${{ steps.autotagger.outputs.tag }}"
+      - name: echo part
+        run: |
+          echo "The version increment was: ${{ steps.autotagger.outputs.part }}"
+
