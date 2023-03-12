@@ -1,1 +1,2 @@
 another example of merge ( in different branch)
+conflict assignment?
