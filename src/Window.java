@@ -8,8 +8,8 @@ import javax.swing.JFrame;
 class Window extends JFrame{
 	private static final long serialVersionUID = -2542001418764869760L;
 	public static ArrayList<ArrayList<DataOfSquare>> Grid;
-	public static int width = 20;
-	public static int height = 20;
+	public static int width = 30;
+	public static int height = 30;
 	public Window(){
 		
 		
@@ -28,7 +28,7 @@ class Window extends JFrame{
 		}
 		
 		// Setting up the layout of the panel
-		getContentPane().setLayout(new GridLayout(20,20,0,0));
+		getContentPane().setLayout(new GridLayout(30,30,0,0));
 		
 		// Start & pauses all threads, then adds every square of each thread to the panel
 		for(int i=0;i<width;i++){
