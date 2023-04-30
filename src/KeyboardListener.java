@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -24,8 +25,17 @@ import java.awt.event.KeyEvent;
 							if(ThreadsController.directionSnake!= Directions.DOWN)
 								ThreadsController.directionSnake= Directions.UP;
 		    				break;
-		    	
-		    	default: 	break;
+				case 82:
+					Window f1= new Window();
+
+					//Setting up the window settings
+					f1.setTitle("Snake");
+					f1.setSize(300,300);
+					f1.setVisible(true);
+					f1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				default:
+							System.out.println(e.getKeyCode());
+					break;
  		    }
  		}
  	
