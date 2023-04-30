@@ -26,6 +26,7 @@ import java.awt.event.KeyEvent;
 								ThreadsController.directionSnake= Directions.UP;
 		    				break;
 				case 82:
+					Main.getWindow().dispose();
 					Window f1= new Window();
 
 					//Setting up the window settings
@@ -33,6 +34,7 @@ import java.awt.event.KeyEvent;
 					f1.setSize(300,300);
 					f1.setVisible(true);
 					f1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					Main.setWindow(f1);
 				default:
 							System.out.println(e.getKeyCode());
 					break;
