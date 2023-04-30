@@ -15,7 +15,7 @@ public class ThreadsController extends Thread {
 	 //Constructor of ControlleurThread 
 	 ThreadsController(Tuple positionDepart){
 		//Get all the threads
-		Squares=Window.Grid;
+		Squares=Window.grid;
 		
 		headSnakePos=new Tuple(positionDepart.x,positionDepart.y);
 		directionSnake = 1;
@@ -104,30 +104,30 @@ public class ThreadsController extends Thread {
 	 private void moveInterne(int dir){
 		 switch(dir){
 		 	case 4:
-				 headSnakePos.ChangeData(headSnakePos.x,(headSnakePos.y+1)%20);
+				 headSnakePos.changeData(headSnakePos.x,(headSnakePos.y+1)%20);
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		break;
 		 	case 3:
 		 		if(headSnakePos.y-1<0){
-		 			 headSnakePos.ChangeData(headSnakePos.x,19);
+		 			 headSnakePos.changeData(headSnakePos.x,19);
 		 		 }
 		 		else{
-				 headSnakePos.ChangeData(headSnakePos.x,Math.abs(headSnakePos.y-1)%20);
+				 headSnakePos.changeData(headSnakePos.x,Math.abs(headSnakePos.y-1)%20);
 		 		}
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		break;
 		 	case 2:
 		 		 if(headSnakePos.x-1<0){
-		 			 headSnakePos.ChangeData(19,headSnakePos.y);
+		 			 headSnakePos.changeData(19,headSnakePos.y);
 		 		 }
 		 		 else{
-		 			 headSnakePos.ChangeData(Math.abs(headSnakePos.x-1)%20,headSnakePos.y);
+		 			 headSnakePos.changeData(Math.abs(headSnakePos.x-1)%20,headSnakePos.y);
 		 		 } 
 		 		positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 
 		 		break;
 		 	case 1:
-				 headSnakePos.ChangeData(Math.abs(headSnakePos.x+1)%20,headSnakePos.y);
+				 headSnakePos.changeData(Math.abs(headSnakePos.x+1)%20,headSnakePos.y);
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		 break;
 		 }
