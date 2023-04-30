@@ -7,22 +7,22 @@ import java.awt.event.KeyEvent;
  		    switch(e.getKeyCode()){
 		    	case 39:	// -> Right 
 		    				//if it's not the opposite direction
-		    				if(ThreadsController.directionSnake!=2) 
-		    					ThreadsController.directionSnake=1;
+		    				if(ThreadsController.directionSnake!=Directions.LEFT)
+		    					ThreadsController.directionSnake= Directions.RIGHT;
 		    			  	break;
 		    	case 38:	// -> Top
-							if(ThreadsController.directionSnake!=4) 
-								ThreadsController.directionSnake=3;
+							if(ThreadsController.directionSnake!= Directions.UP)
+								ThreadsController.directionSnake= Directions.DOWN;
 		    				break;
 		    				
 		    	case 37: 	// -> Left 
-							if(ThreadsController.directionSnake!=1)
-								ThreadsController.directionSnake=2;
+							if(ThreadsController.directionSnake!= Directions.RIGHT)
+								ThreadsController.directionSnake= Directions.LEFT;
 		    				break;
 		    				
 		    	case 40:	// -> Bottom
-							if(ThreadsController.directionSnake!=3)
-								ThreadsController.directionSnake=4;
+							if(ThreadsController.directionSnake!= Directions.DOWN)
+								ThreadsController.directionSnake= Directions.UP;
 		    				break;
 		    	
 		    	default: 	break;

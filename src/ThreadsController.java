@@ -7,7 +7,7 @@ public class ThreadsController extends Thread {
 	 Tuple headSnakePos;
 	 int sizeSnake=3;
 	 long speed = 50;
-	 public static int directionSnake ;
+	 public static Directions directionSnake;
 
 	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
 	 Tuple foodPosition;
@@ -18,7 +18,7 @@ public class ThreadsController extends Thread {
 		Squares=Window.Grid;
 		
 		headSnakePos=new Tuple(positionDepart.x,positionDepart.y);
-		directionSnake = 1;
+		directionSnake = Directions.RIGHT;
 
 		//!!! Pointer !!!!
 		Tuple headPos = new Tuple(headSnakePos.getX(),headSnakePos.getY());
@@ -101,13 +101,13 @@ public class ThreadsController extends Thread {
 	 
 	 //Moves the head of the snake and refreshes the positions in the arraylist
 	 //1:right 2:left 3:top 4:bottom 0:nothing
-	 private void moveInterne(int dir){
+	 private void moveInterne(Directions dir){
 		 switch(dir){
-		 	case 4:
+			 case UP:
 				 headSnakePos.ChangeData(headSnakePos.x,(headSnakePos.y+1)%20);
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		break;
-		 	case 3:
+			 case DOWN:
 		 		if(headSnakePos.y-1<0){
 		 			 headSnakePos.ChangeData(headSnakePos.x,19);
 		 		 }
@@ -116,7 +116,7 @@ public class ThreadsController extends Thread {
 		 		}
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		break;
-		 	case 2:
+			 case LEFT:
 		 		 if(headSnakePos.x-1<0){
 		 			 headSnakePos.ChangeData(19,headSnakePos.y);
 		 		 }
@@ -126,7 +126,7 @@ public class ThreadsController extends Thread {
 		 		positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 
 		 		break;
-		 	case 1:
+			 case RIGHT:
 				 headSnakePos.ChangeData(Math.abs(headSnakePos.x+1)%20,headSnakePos.y);
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		 break;
