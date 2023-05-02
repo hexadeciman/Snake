@@ -22,6 +22,13 @@ The code is well commented, if you have any questions or want to continue this p
 * Start playing with the arrows keys. 
 * If you lose, just close it and re-open it (I will add a restart button possibly)
 
+#### Troubleshooting (No X11 DISPLAY variable was set):
+* If on linux make sure you don't have a headless version of Java installed
+* Otherwise check to make sure display environment variable is set
+```
+export DISPLAY=:0.0
+```
+
 ### Mentions
 #### Blog Posts:
 - [hackr.io](https://hackr.io/blog/java-projects)
