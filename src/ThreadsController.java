@@ -8,17 +8,19 @@ public class ThreadsController extends Thread {
 	 int sizeSnake=3;
 	 long speed = 50;
 	 public static int directionSnake ;
-
 	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
 	 Tuple foodPosition;
-
+	 public static int score;
 	 public static boolean ableToAcceptKeyPress;
-	 
+	 public static boolean gameEnd;
 	 //Constructor of ControlleurThread 
 	 ThreadsController(Tuple positionDepart){
+		 score = 0;
 		//Get all the threads
 		Squares=Window.Grid;
 		ableToAcceptKeyPress = true;
+		gameEnd = false;
+
 		
 		headSnakePos=new Tuple(positionDepart.x,positionDepart.y);
 		directionSnake = 1;
@@ -35,15 +37,20 @@ public class ThreadsController extends Thread {
 	 //Important part :
 	 public void run() {
 		 while(true){
-			 ableToAcceptKeyPress = true;
-			 moveInterne(directionSnake);
-			 checkCollision();
-			 moveExterne();
-			 deleteTail();
-			 pauser();
+			 if(!gameEnd){
+				 // System.out.println("Update");
+				 ableToAcceptKeyPress = true;
+				 moveInterne(directionSnake);
+				 checkCollision();
+				 moveExterne();
+				 deleteTail();
+				 pauser();
+			 }
+
+
 		 }
 	 }
-	 
+
 	 //delay between each move of the snake
 	 private void pauser(){
 		 try {
@@ -70,7 +77,8 @@ public class ThreadsController extends Thread {
 		 
 		 boolean eatingFood = posCritique.getX()==foodPosition.y && posCritique.getY()==foodPosition.x;
 		 if(eatingFood){
-			 System.out.println("Yummy!");
+			 // System.out.println("Yummy!");
+			 score++;
 			 sizeSnake=sizeSnake+1;
 			 	foodPosition = getValAleaNotInSnake();
 
@@ -80,10 +88,13 @@ public class ThreadsController extends Thread {
 	 
 	 //Stops The Game
 	 private void stopTheGame(){
-		 System.out.println("COLISION! \n");
+		 // System.out.println("COLLISION! \n");
+		 gameEnd = true;
+		 Main.closeFrame.setVisible(true);
 		 while(true){
 			 pauser();
 		 }
+
 	 }
 	 
 	 //Put food in a position and displays it
