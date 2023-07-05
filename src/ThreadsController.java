@@ -24,7 +24,7 @@ public class ThreadsController extends Thread {
 		Tuple headPos = new Tuple(headSnakePos.getX(),headSnakePos.getY());
 		positions.add(headPos);
 		
-		foodPosition= new Tuple(Window.height-1,Window.width-1);
+		foodPosition= getValAleaNotInSnake();
 		spawnFood(foodPosition);
 
 	 }
@@ -54,9 +54,14 @@ public class ThreadsController extends Thread {
 		 Tuple posCritique = positions.get(positions.size()-1);
 		 for(int i = 0;i<=positions.size()-2;i++){
 			 boolean biteItself = posCritique.getX()==positions.get(i).getX() && posCritique.getY()==positions.get(i).getY();
+			 boolean touchWall = headSnakePos.getX() > Main.WINDOWX ||headSnakePos.getY() > Main.WINDOWY || headSnakePos.getX() < 0 || headSnakePos.getY() < 0;
 			 if(biteItself){
 				stopTheGame();
 			 }
+			 if(touchWall){
+				 stopTheGame();
+			 }
+
 		 }
 		 
 		 boolean eatingFood = posCritique.getX()==foodPosition.y && posCritique.getY()==foodPosition.x;
@@ -104,30 +109,36 @@ public class ThreadsController extends Thread {
 	 private void moveInterne(int dir){
 		 switch(dir){
 		 	case 4:
-				 headSnakePos.ChangeData(headSnakePos.x,(headSnakePos.y+1)%20);
+				 headSnakePos.ChangeData(headSnakePos.x,(headSnakePos.y+1));
+
+
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		break;
 		 	case 3:
-		 		if(headSnakePos.y-1<0){
-		 			 headSnakePos.ChangeData(headSnakePos.x,19);
-		 		 }
-		 		else{
-				 headSnakePos.ChangeData(headSnakePos.x,Math.abs(headSnakePos.y-1)%20);
-		 		}
+
+		 		//if(headSnakePos.y-1<0){
+		 		//	 headSnakePos.ChangeData(headSnakePos.x,19);
+		 		// }
+		 		//else{
+				headSnakePos.ChangeData(headSnakePos.x,Math.abs(headSnakePos.y-1)%20);
+		 		//}
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		break;
 		 	case 2:
-		 		 if(headSnakePos.x-1<0){
-		 			 headSnakePos.ChangeData(19,headSnakePos.y);
-		 		 }
-		 		 else{
-		 			 headSnakePos.ChangeData(Math.abs(headSnakePos.x-1)%20,headSnakePos.y);
-		 		 } 
+		 		 //if(headSnakePos.x-1<0){
+		 			 //headSnakePos.ChangeData(19,headSnakePos.y);
+		 		 //}
+		 		 //else{
+				headSnakePos.ChangeData(Math.abs(headSnakePos.x-1)%20,headSnakePos.y);
+		 		// }
 		 		positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 
 		 		break;
 		 	case 1:
-				 headSnakePos.ChangeData(Math.abs(headSnakePos.x+1)%20,headSnakePos.y);
+
+				 headSnakePos.ChangeData(headSnakePos.x+1%20,headSnakePos.y);
+
+
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		 break;
 		 }
@@ -138,7 +149,12 @@ public class ThreadsController extends Thread {
 		 for(Tuple t : positions){
 			 int y = t.getX();
 			 int x = t.getY();
-			 Squares.get(x).get(y).lightMeUp(0);
+			 try{
+				 Squares.get(x).get(y).lightMeUp(0);
+			 } catch (IndexOutOfBoundsException e){
+				 stopTheGame();
+			 }
+
 			 
 		 }
 	 }
