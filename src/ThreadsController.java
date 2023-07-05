@@ -11,11 +11,14 @@ public class ThreadsController extends Thread {
 
 	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
 	 Tuple foodPosition;
+
+	 public static boolean ableToAcceptKeyPress;
 	 
 	 //Constructor of ControlleurThread 
 	 ThreadsController(Tuple positionDepart){
 		//Get all the threads
 		Squares=Window.Grid;
+		ableToAcceptKeyPress = true;
 		
 		headSnakePos=new Tuple(positionDepart.x,positionDepart.y);
 		directionSnake = 1;
@@ -32,6 +35,7 @@ public class ThreadsController extends Thread {
 	 //Important part :
 	 public void run() {
 		 while(true){
+			 ableToAcceptKeyPress = true;
 			 moveInterne(directionSnake);
 			 checkCollision();
 			 moveExterne();
