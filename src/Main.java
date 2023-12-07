@@ -1,4 +1,4 @@
-import javax.swing.JFrame;
+import javax.*;
 
 public class Main {
 
