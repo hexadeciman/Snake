@@ -21,8 +21,8 @@ class Window extends JFrame{
 		for(int i=0;i<width;i++){
 			data= new ArrayList<DataOfSquare>();
 			for(int j=0;j<height;j++){
-				DataOfSquare c = new DataOfSquare(2);
-				data.add(c);
+				DataOfSquare colorObject = new DataOfSquare(2);
+				data.add(colorObject);
 			}
 			Grid.add(data);
 		}
@@ -40,9 +40,9 @@ class Window extends JFrame{
 		// initial position of the snake
 		Tuple position = new Tuple(10,10);
 		// passing this value to the controller
-		ThreadsController c = new ThreadsController(position);
+		ThreadsController colorObject = new ThreadsController(position);
 		//Let's start the game now..
-		c.start();
+		colorObject.start();
 
 		// Links the window to the keyboardlistenner.
 		this.addKeyListener((KeyListener) new KeyboardListener());
@@ -52,6 +52,5 @@ class Window extends JFrame{
 		//Tuple position2 = new Tuple(13,13);
 		//ControlleurThreads c2 = new ControlleurThreads(position2);
 		//c2.start();
-		
 	}
 }
