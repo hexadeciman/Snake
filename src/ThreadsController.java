@@ -1,74 +1,146 @@
+
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.InputStream;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 
-//Controls all the game logic .. most important class in this project.
+
 public class ThreadsController extends Thread {
-	 ArrayList<ArrayList<DataOfSquare>> Squares= new ArrayList<ArrayList<DataOfSquare>>();
-	 Tuple headSnakePos;
-	 int sizeSnake=3;
-	 long speed = 50;
-	 public static int directionSnake ;
+	int points = 0;
+    ArrayList<ArrayList<DataOfSquare>> Squares = new ArrayList<ArrayList<DataOfSquare>>();
+    Tuple headSnakePos;
+    int sizeSnake = 3;
+    long speed = 50;
+    public static int directionSnake;
 
-	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
-	 Tuple foodPosition;
-	 
-	 //Constructor of ControlleurThread 
-	 ThreadsController(Tuple positionDepart){
-		//Get all the threads
-		Squares=Window.Grid;
-		
-		headSnakePos=new Tuple(positionDepart.x,positionDepart.y);
-		directionSnake = 1;
+    ArrayList<Tuple> positions = new ArrayList<Tuple>();
+    Tuple foodPosition;
+    private boolean isPaused = false; // Add this line
 
-		//!!! Pointer !!!!
-		Tuple headPos = new Tuple(headSnakePos.getX(),headSnakePos.getY());
-		positions.add(headPos);
-		
-		foodPosition= new Tuple(Window.height-1,Window.width-1);
-		spawnFood(foodPosition);
+    // Constructor of ControlleurThread
+    ThreadsController(Tuple positionDepart) {
+        // Get all the threads
+        Squares = Window.Grid;
 
-	 }
-	 
-	 //Important part :
-	 public void run() {
-		 while(true){
-			 moveInterne(directionSnake);
-			 checkCollision();
-			 moveExterne();
-			 deleteTail();
-			 pauser();
-		 }
-	 }
+        headSnakePos = new Tuple(positionDepart.x, positionDepart.y);
+        directionSnake = 1;
+
+        // !!! Pointer !!!!
+        Tuple headPos = new Tuple(headSnakePos.getX(), headSnakePos.getY());
+        positions.add(headPos);
+
+        foodPosition = new Tuple(Window.height - 1, Window.width - 1);
+        spawnFood(foodPosition);
+    }
+
+    // Important part:
+    public void run() {
+        while (true) {
+            if (!isPaused) { // Check if the game is not paused
+                moveInterne(directionSnake);
+                checkCollision();
+                moveExterne();
+                deleteTail();
+            }
+            pauser();
+        }
+    }
+
 	 
 	 //delay between each move of the snake
 	 private void pauser(){
 		 try {
 				sleep(speed);
-		 } catch (InterruptedException e) {
-				e.printStackTrace();
+		 } catch (InterruptedException event) {
+			event.printStackTrace();
 		 }
 	 }
-	 
+	 //
+
+
 	 //Checking if the snake bites itself or is eating
-	 private void checkCollision() {
-		 Tuple posCritique = positions.get(positions.size()-1);
-		 for(int i = 0;i<=positions.size()-2;i++){
-			 boolean biteItself = posCritique.getX()==positions.get(i).getX() && posCritique.getY()==positions.get(i).getY();
-			 if(biteItself){
-				stopTheGame();
-			 }
-		 }
-		 
+
+private void checkCollision() {
+    Scanner sc = new Scanner(System.in);
+    Tuple posCritique = positions.get(positions.size() - 1);
+    for (int i = 0; i <= positions.size() - 2; i++) {
+        boolean biteItself = posCritique.getX() == positions.get(i).getX() && posCritique.getY() == positions.get(i).getY();
+        if (biteItself) {
+            System.out.println("Restart? (y/n)");
+            String yesOrNo = sc.nextLine(); // Use nextLine() instead of hasNextLine
+			if ("y".equals(yesOrNo)) {
+				// Close the scanner before restarting
+
+				// Create a new instance of ThreadsController and start it
+				ThreadsController newController = new ThreadsController(new Tuple(10, 10));
+				// Update headSnakePos and foodPosition for the new instance
+				newController.headSnakePos = new Tuple(10, 10);
+				newController.foodPosition = new Tuple(Window.height - 1, Window.width - 1);
+				// Clear the positions array
+				newController.positions.clear();
+				Tuple headPos = new Tuple(newController.headSnakePos.getX(), newController.headSnakePos.getY());
+				newController.positions.add(headPos);
+				newController.isPaused = false;
+				newController.start();
+
+            } else if ("n".equals(yesOrNo)) {
+
+                stopTheGame();
+            }
+        }
+    }
+
 		 boolean eatingFood = posCritique.getX()==foodPosition.y && posCritique.getY()==foodPosition.x;
 		 if(eatingFood){
-			 System.out.println("Yummy!");
-			 sizeSnake=sizeSnake+1;
-			 	foodPosition = getValAleaNotInSnake();
+			points+=1; //points added
+			System.out.println("Yummy!");
+			System.out.println("Points:" + points);
+			sizeSnake=sizeSnake+1; 
+			foodPosition = getValAleaNotInSnake();
+			spawnFood(foodPosition);	
+		//adds crunch sound
+			try {
+				//obtains inputStream of NewcrunchSound
+				InputStream inputStream = this.getClass().getResourceAsStream("NewcrunchSound.wav");
 
-			 spawnFood(foodPosition);	
-		 }
+				// Check if the input stream is null before proceeding
+				if (inputStream != null) {
+					//creates an AudioInputStream from the loaded sound file.
+					AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream);
+
+					//  specifies the audio format (16-bit PCM, 44100 Hz, 1 channel)
+					AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
+					//converts the original AudioInputStream to match the specified audio format.
+					AudioInputStream compatibleInputStream = AudioSystem.getAudioInputStream(format, audioInputStream);
+					//crates Clip object and opens it with AudioInputStream
+					Clip clip = AudioSystem.getClip();
+					clip.open(compatibleInputStream);
+
+					clip.start();
+					
+					// checks if clip is running
+					while (clip.isRunning()) {
+						Thread.sleep(10);
+					}
+				} else {
+					System.err.println("Error. Input is null.");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.err.println("Error playing sound: " + e.getMessage());
+			}
+
+
+			
+		}
 	 }
-	 
+
+
+
 	 //Stops The Game
 	 private void stopTheGame(){
 		 System.out.println("COLISION! \n");
