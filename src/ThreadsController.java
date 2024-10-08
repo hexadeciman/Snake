@@ -7,39 +7,40 @@ public class ThreadsController extends Thread {
 	 Tuple headSnakePos;
 	 int sizeSnake=3;
 	 long speed = 50;
-	 public static int directionSnake ;
+	 public static SnakeDirections snakeDirection;
+	 private boolean gameOver = false;
 
 	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
 	 Tuple foodPosition;
-	 
-	 //Constructor of ControlleurThread 
+
+	 //Constructor of ControlleurThread
 	 ThreadsController(Tuple positionDepart){
 		//Get all the threads
 		Squares=Window.Grid;
-		
+
 		headSnakePos=new Tuple(positionDepart.x,positionDepart.y);
-		directionSnake = 1;
+		snakeDirection = SnakeDirections.RIGHT;
 
 		//!!! Pointer !!!!
 		Tuple headPos = new Tuple(headSnakePos.getX(),headSnakePos.getY());
 		positions.add(headPos);
-		
+
 		foodPosition= new Tuple(Window.height-1,Window.width-1);
 		spawnFood(foodPosition);
 
 	 }
-	 
+
 	 //Important part :
 	 public void run() {
-		 while(true){
-			 moveInterne(directionSnake);
+		 while(!gameOver){
+			 moveInterne(snakeDirection);
 			 checkCollision();
 			 moveExterne();
 			 deleteTail();
 			 pauser();
 		 }
 	 }
-	 
+
 	 //delay between each move of the snake
 	 private void pauser(){
 		 try {
@@ -48,7 +49,7 @@ public class ThreadsController extends Thread {
 				e.printStackTrace();
 		 }
 	 }
-	 
+
 	 //Checking if the snake bites itself or is eating
 	 private void checkCollision() {
 		 Tuple posCritique = positions.get(positions.size()-1);
@@ -58,56 +59,54 @@ public class ThreadsController extends Thread {
 				stopTheGame();
 			 }
 		 }
-		 
+
 		 boolean eatingFood = posCritique.getX()==foodPosition.y && posCritique.getY()==foodPosition.x;
 		 if(eatingFood){
 			 System.out.println("Yummy!");
 			 sizeSnake=sizeSnake+1;
 			 	foodPosition = getValAleaNotInSnake();
 
-			 spawnFood(foodPosition);	
+			 spawnFood(foodPosition);
 		 }
 	 }
-	 
+
 	 //Stops The Game
 	 private void stopTheGame(){
 		 System.out.println("COLISION! \n");
-		 while(true){
-			 pauser();
-		 }
+		 gameOver = true;
 	 }
-	 
+
 	 //Put food in a position and displays it
 	 private void spawnFood(Tuple foodPositionIn){
 		 	Squares.get(foodPositionIn.x).get(foodPositionIn.y).lightMeUp(1);
 	 }
-	 
+
 	 //return a position not occupied by the snake
 	 private Tuple getValAleaNotInSnake(){
 		 Tuple p ;
-		 int ranX= 0 + (int)(Math.random()*19); 
-		 int ranY= 0 + (int)(Math.random()*19); 
+		 int ranX= 0 + (int)(Math.random()*19);
+		 int ranY= 0 + (int)(Math.random()*19);
 		 p=new Tuple(ranX,ranY);
 		 for(int i = 0;i<=positions.size()-1;i++){
 			 if(p.getY()==positions.get(i).getX() && p.getX()==positions.get(i).getY()){
-				 ranX= 0 + (int)(Math.random()*19); 
-				 ranY= 0 + (int)(Math.random()*19); 
+				 ranX= 0 + (int)(Math.random()*19);
+				 ranY= 0 + (int)(Math.random()*19);
 				 p=new Tuple(ranX,ranY);
 				 i=0;
 			 }
 		 }
 		 return p;
 	 }
-	 
+
 	 //Moves the head of the snake and refreshes the positions in the arraylist
 	 //1:right 2:left 3:top 4:bottom 0:nothing
-	 private void moveInterne(int dir){
-		 switch(dir){
-		 	case 4:
+	 private void moveInterne(SnakeDirections direction){
+		 switch(direction){
+		 	case DOWN:
 				 headSnakePos.ChangeData(headSnakePos.x,(headSnakePos.y+1)%20);
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		break;
-		 	case 3:
+		 	case UP:
 		 		if(headSnakePos.y-1<0){
 		 			 headSnakePos.ChangeData(headSnakePos.x,19);
 		 		 }
@@ -116,17 +115,17 @@ public class ThreadsController extends Thread {
 		 		}
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		break;
-		 	case 2:
+		 	case LEFT:
 		 		 if(headSnakePos.x-1<0){
 		 			 headSnakePos.ChangeData(19,headSnakePos.y);
 		 		 }
 		 		 else{
 		 			 headSnakePos.ChangeData(Math.abs(headSnakePos.x-1)%20,headSnakePos.y);
-		 		 } 
+		 		 }
 		 		positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 
 		 		break;
-		 	case 1:
+			 case RIGHT:
 				 headSnakePos.ChangeData(Math.abs(headSnakePos.x+1)%20,headSnakePos.y);
 				 positions.add(new Tuple(headSnakePos.x,headSnakePos.y));
 		 		 break;
