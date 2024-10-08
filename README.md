@@ -22,7 +22,7 @@ The code is well commented, if you have any questions or want to continue this p
 * Start playing with the arrows keys
 * If you lose, just close it and re-open it (I will add a restart button possibly)
 
-#### How to run on Mac OSX with Docker
+#### How to run on Mac OSX with Docker:
 * Install [Xquartz](https://www.xquartz.org/)
 * Launch XQuartz. Under the XQuartz menu, select Preferences
 * Go to the security tab and ensure "Allow connections from network clients" is checked.
@@ -40,6 +40,7 @@ export DISPLAY=:0.0
 #### Blog Posts:
 - [hackr.io](https://hackr.io/blog/java-projects)
 - [NullClass](https://nullclass.com/free-java-projects-for-beginners-2021-with-source-code/)
+- [niithanoi.edu.vn](https://niithanoi.edu.vn/10-project-java-mien-phi-danh-cho-nguoi-moi-hoc.html#h2-title-10) 
 
 #### Academia:
 - [NCU CSIE Taiwan Uni.](https://www.csie.ntu.edu.tw/~d00922011/java/304/java.html)
