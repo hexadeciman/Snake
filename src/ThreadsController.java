@@ -7,16 +7,19 @@ public class ThreadsController extends Thread {
 	 Tuple headSnakePos;
 	 int sizeSnake=3;
 	 long speed = 50;
+         int points = 0;
+         Window frame;
 	 public static int directionSnake ;
 
 	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
 	 Tuple foodPosition;
 	 
 	 //Constructor of ControlleurThread 
-	 ThreadsController(Tuple positionDepart){
+	 ThreadsController(Tuple positionDepart,Window parmFrame){
 		//Get all the threads
 		Squares=Window.Grid;
-		
+                frame = parmFrame;
+
 		headSnakePos=new Tuple(positionDepart.x,positionDepart.y);
 		directionSnake = 1;
 
@@ -31,6 +34,7 @@ public class ThreadsController extends Thread {
 	 
 	 //Important part :
 	 public void run() {
+             
 		 while(true){
 			 moveInterne(directionSnake);
 			 checkCollision();
@@ -61,7 +65,8 @@ public class ThreadsController extends Thread {
 		 
 		 boolean eatingFood = posCritique.getX()==foodPosition.y && posCritique.getY()==foodPosition.x;
 		 if(eatingFood){
-			 System.out.println("Yummy!");
+                     frame.setpoints(++points);
+                        System.out.println("Yummy!");
 			 sizeSnake=sizeSnake+1;
 			 	foodPosition = getValAleaNotInSnake();
 
