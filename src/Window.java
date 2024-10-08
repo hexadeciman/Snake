@@ -7,19 +7,19 @@ import javax.swing.JFrame;
 
 class Window extends JFrame{
 	private static final long serialVersionUID = -2542001418764869760L;
-	public static ArrayList<ArrayList<DataOfSquare>> Grid;
-	public static int width = 20;
-	public static int height = 20;
-	public Window(){
+	protected static ArrayList<ArrayList<DataOfSquare>> Grid;
+	protected static int width = 20;
+	protected static int height = 20;
+	protected Window(){
 		
 		
 		// Creates the arraylist that'll contain the threads
-		Grid = new ArrayList<ArrayList<DataOfSquare>>();
+		Grid = new ArrayList<>();
 		ArrayList<DataOfSquare> data;
 		
 		// Creates Threads and its data and adds it to the arrayList
 		for(int i=0;i<width;i++){
-			data= new ArrayList<DataOfSquare>();
+			data= new ArrayList<>();
 			for(int j=0;j<height;j++){
 				DataOfSquare c = new DataOfSquare(2);
 				data.add(c);
@@ -45,7 +45,7 @@ class Window extends JFrame{
 		c.start();
 
 		// Links the window to the keyboardlistenner.
-		this.addKeyListener((KeyListener) new KeyboardListener());
+		this.addKeyListener(new KeyboardListener());
 
 		//To do : handle multiplayers .. The above works, test it and see what happens
 		
