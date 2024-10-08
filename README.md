@@ -14,13 +14,20 @@ The code is well commented, if you have any questions or want to continue this p
 
 #### Requirements:
 * Java runtime installed
+* Alternatively: Docker
 
 #### How to play the game:
-
 * Just download the SnakeGame.jar file
-* Run it 
-* Start playing with the arrows keys. 
+* Run it
+* Start playing with the arrows keys
 * If you lose, just close it and re-open it (I will add a restart button possibly)
+
+#### How to run on Mac OSX with Docker
+* Install [Xquartz](https://www.xquartz.org/)
+* Launch XQuartz. Under the XQuartz menu, select Preferences
+* Go to the security tab and ensure "Allow connections from network clients" is checked.
+* In XQuartz terminal: Run xhost + ${hostname} to allow connections to the macOS host *
+* run ```sudo docker-compose up --build```
 
 #### Troubleshooting (No X11 DISPLAY variable was set):
 * If on linux make sure you don't have a headless version of Java installed

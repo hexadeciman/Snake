@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  java-app:
+    build: .
+    volumes:
+      - ./:/app
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=host.docker.internal:0
+    command: ["java", "-jar", "/app/Snakegame.jar"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # Allows container to reach the host machine
+    tty: true  # Keep the terminal open
+    cap_add:
+      - SYS_ADMIN
