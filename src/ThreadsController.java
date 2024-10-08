@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 
 //Controls all the game logic .. most important class in this project.
 public class ThreadsController extends Thread {
 	 ArrayList<ArrayList<DataOfSquare>> Squares= new ArrayList<ArrayList<DataOfSquare>>();
 	 Tuple headSnakePos;
-	 int sizeSnake=3;
+	 int sizeSnake = 3;
 	 long speed = 50;
 	 public static int directionSnake ;
 
@@ -42,11 +44,22 @@ public class ThreadsController extends Thread {
 	 
 	 //delay between each move of the snake
 	 private void pauser(){
-		 try {
+		try {
 				sleep(speed);
-		 } catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 				e.printStackTrace();
 		 }
+	 }
+	 //Setting up restart after game pauses
+	 private void restart() {
+		// Restarting the game
+			//Creating the window again
+			Window f1= new Window();
+			//Setting up the window settings
+			f1.setTitle("Snake");
+			f1.setSize(300,300);
+			f1.setVisible(true);
+			f1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	 }
 	 
 	 //Checking if the snake bites itself or is eating
@@ -56,6 +69,7 @@ public class ThreadsController extends Thread {
 			 boolean biteItself = posCritique.getX()==positions.get(i).getX() && posCritique.getY()==positions.get(i).getY();
 			 if(biteItself){
 				stopTheGame();
+				
 			 }
 		 }
 		 
@@ -72,9 +86,11 @@ public class ThreadsController extends Thread {
 	 //Stops The Game
 	 private void stopTheGame(){
 		 System.out.println("COLISION! \n");
+		 restart();
 		 while(true){
 			 pauser();
-		 }
+		}
+		 
 	 }
 	 
 	 //Put food in a position and displays it
