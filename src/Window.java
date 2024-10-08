@@ -7,14 +7,14 @@ import javax.swing.JFrame;
 
 class Window extends JFrame{
 	private static final long serialVersionUID = -2542001418764869760L;
-	public static ArrayList<ArrayList<DataOfSquare>> Grid;
+	public static ArrayList<ArrayList<DataOfSquare>> grid;
 	public static int width = 20;
 	public static int height = 20;
 	public Window(){
 		
 		
 		// Creates the arraylist that'll contain the threads
-		Grid = new ArrayList<ArrayList<DataOfSquare>>();
+		grid = new ArrayList<ArrayList<DataOfSquare>>();
 		ArrayList<DataOfSquare> data;
 		
 		// Creates Threads and its data and adds it to the arrayList
@@ -24,7 +24,7 @@ class Window extends JFrame{
 				DataOfSquare c = new DataOfSquare(2);
 				data.add(c);
 			}
-			Grid.add(data);
+			grid.add(data);
 		}
 		
 		// Setting up the layout of the panel
@@ -33,7 +33,7 @@ class Window extends JFrame{
 		// Start & pauses all threads, then adds every square of each thread to the panel
 		for(int i=0;i<width;i++){
 			for(int j=0;j<height;j++){
-				getContentPane().add(Grid.get(i).get(j).square);
+				getContentPane().add(grid.get(i).get(j).square);
 			}
 		}
 		
