@@ -1,34 +1,53 @@
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 
 
 //Controls all the game logic .. most important class in this project.
 public class ThreadsController extends Thread {
-	 ArrayList<ArrayList<DataOfSquare>> Squares= new ArrayList<ArrayList<DataOfSquare>>();
+	 ArrayList<ArrayList<DataOfSquare>> Squares;
 	 Tuple headSnakePos;
-	 int sizeSnake=3;
-	 long speed = 50;
+	 int sizeSnake;
+	 long speed;
 	 public static int directionSnake ;
 
-	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
-	 Tuple foodPosition;
+	 ArrayList<Tuple> positions;
+	 Tuple foodPosition, positionDepart;
 	 
 	 //Constructor of ControlleurThread 
-	 ThreadsController(Tuple positionDepart){
+	 ThreadsController(Tuple _positionDepart){
 		//Get all the threads
-		Squares=Window.Grid;
-		
-		headSnakePos=new Tuple(positionDepart.x,positionDepart.y);
-		directionSnake = 1;
-
-		//!!! Pointer !!!!
-		Tuple headPos = new Tuple(headSnakePos.getX(),headSnakePos.getY());
-		positions.add(headPos);
-		
-		foodPosition= new Tuple(Window.height-1,Window.width-1);
-		spawnFood(foodPosition);
-
+                positionDepart = _positionDepart;
+                initGame();
 	 }
 	 
+         void initGame(){
+            Squares= new ArrayList<ArrayList<DataOfSquare>>();
+
+            Squares=Window.Grid;
+            sizeSnake=3;
+            speed = 100;
+            positions = new ArrayList<Tuple>();
+
+            headSnakePos=new Tuple(positionDepart.x,positionDepart.y);
+            directionSnake = 1;
+
+            //!!! Pointer !!!!
+            Tuple headPos = new Tuple(headSnakePos.getX(),headSnakePos.getY());
+            positions.add(headPos);
+
+            foodPosition= new Tuple(Window.height-1,Window.width-1);
+            spawnFood(foodPosition);
+         }
+         
+         void restart(){
+             for(int i = 0; i< Squares.size();i++){
+                for(int j = 0;j < Squares.get(0).size();j++){
+                    Squares.get(i).get(j).lightMeUp(2);
+                } 
+             }
+             initGame();
+         }
+         
 	 //Important part :
 	 public void run() {
 		 while(true){
@@ -55,13 +74,16 @@ public class ThreadsController extends Thread {
 		 for(int i = 0;i<=positions.size()-2;i++){
 			 boolean biteItself = posCritique.getX()==positions.get(i).getX() && posCritique.getY()==positions.get(i).getY();
 			 if(biteItself){
-				stopTheGame();
+				//stopTheGame();
+                                restart();
 			 }
 		 }
 		 
 		 boolean eatingFood = posCritique.getX()==foodPosition.y && posCritique.getY()==foodPosition.x;
 		 if(eatingFood){
 			 System.out.println("Yummy!");
+                         if(speed > 5)
+                            speed-=2;  //Each time the snake eats the difficulty increases
 			 sizeSnake=sizeSnake+1;
 			 	foodPosition = getValAleaNotInSnake();
 
