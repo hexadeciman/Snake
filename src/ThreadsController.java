@@ -1,12 +1,14 @@
 import java.util.ArrayList;
-
+import java.util.Scanner;
 
 //Controls all the game logic .. most important class in this project.
 public class ThreadsController extends Thread {
 	 ArrayList<ArrayList<DataOfSquare>> Squares= new ArrayList<ArrayList<DataOfSquare>>();
 	 Tuple headSnakePos;
-	 int sizeSnake=3;
-	 long speed = 50;
+	 Scanner sc = new Scanner(System.in);
+	 System.out.println("Enter the size of snake");
+	 int sizeSnake=sc.nextInt;
+	 long speed = 40;
 	 public static int directionSnake ;
 
 	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
