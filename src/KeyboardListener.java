@@ -24,6 +24,10 @@ import java.awt.event.KeyEvent;
 							if(ThreadsController.directionSnake!=3)
 								ThreadsController.directionSnake=4;
 		    				break;
+
+				case KeyEvent.VK_SPACE:   // -> space
+                    Window.controller.toggleSpeed();
+                    break;
 		    	
 		    	default: 	break;
  		    }
