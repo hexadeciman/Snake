@@ -1,8 +1,10 @@
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 
 class Window extends JFrame{
@@ -10,8 +12,12 @@ class Window extends JFrame{
 	public static ArrayList<ArrayList<DataOfSquare>> Grid;
 	public static int width = 20;
 	public static int height = 20;
+	public static int currentSpeedLevel = 1;
+	public static ThreadsController controller;
+	public static Window instance;
+	private JLabel speedLabel;
 	public Window(){
-		
+		instance = this;
 		
 		// Creates the arraylist that'll contain the threads
 		Grid = new ArrayList<ArrayList<DataOfSquare>>();
@@ -26,23 +32,35 @@ class Window extends JFrame{
 			}
 			Grid.add(data);
 		}
+
+		this.setLayout(new BorderLayout());
+
+		speedLabel = new JLabel("Speed: " + currentSpeedLevel);
+        speedLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        speedLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 0));
+        this.add(speedLabel, BorderLayout.NORTH);
+
+		JPanel gamePanel = new JPanel();
+        gamePanel.setLayout(new GridLayout(20, 20, 0, 0));
 		
-		// Setting up the layout of the panel
-		getContentPane().setLayout(new GridLayout(20,20,0,0));
+		// // Setting up the layout of the panel
+		// getContentPane().setLayout(new GridLayout(20,20,0,0));
 		
 		// Start & pauses all threads, then adds every square of each thread to the panel
 		for(int i=0;i<width;i++){
 			for(int j=0;j<height;j++){
-				getContentPane().add(Grid.get(i).get(j).square);
+				gamePanel.add(Grid.get(i).get(j).square);
 			}
 		}
+
+		this.add(gamePanel, BorderLayout.CENTER);
 		
 		// initial position of the snake
 		Tuple position = new Tuple(10,10);
 		// passing this value to the controller
-		ThreadsController c = new ThreadsController(position);
+		controller = new ThreadsController(position);
 		//Let's start the game now..
-		c.start();
+		controller.start();
 
 		// Links the window to the keyboardlistenner.
 		this.addKeyListener((KeyListener) new KeyboardListener());
@@ -54,4 +72,15 @@ class Window extends JFrame{
 		//c2.start();
 		
 	}
+	
+	public void updateSpeedLabel() {
+        speedLabel.setText("Speed: " + currentSpeedLevel);
+    }
+	// @Override
+    // public void paint(Graphics g) {
+    //     super.paint(g);
+    //     g.setColor(Color.BLACK);
+    //     g.setFont(new Font("Arial", Font.BOLD, 18));
+    //     g.drawString("Speed: " + currentSpeedLevel, 10, 25);
+    // }
 }

@@ -6,7 +6,9 @@ public class ThreadsController extends Thread {
 	 ArrayList<ArrayList<DataOfSquare>> Squares= new ArrayList<ArrayList<DataOfSquare>>();
 	 Tuple headSnakePos;
 	 int sizeSnake=3;
-	 long speed = 50;
+	 int speedLevel = 1; // 1:slow, 2:mid, 3:fast
+     long[] speedTable = {150, 80, 30}; 
+	 long speed = 150;
 	 public static int directionSnake ;
 
 	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
@@ -39,6 +41,13 @@ public class ThreadsController extends Thread {
 			 pauser();
 		 }
 	 }
+
+	public void toggleSpeed() {
+        speedLevel = speedLevel % 3 + 1;
+        speed = speedTable[speedLevel - 1];
+        Window.currentSpeedLevel = speedLevel;
+		Window.instance.repaint(); 
+    }
 	 
 	 //delay between each move of the snake
 	 private void pauser(){
