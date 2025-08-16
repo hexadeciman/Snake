@@ -6,14 +6,15 @@ public class ThreadsController extends Thread {
 	 ArrayList<ArrayList<DataOfSquare>> Squares= new ArrayList<ArrayList<DataOfSquare>>();
 	 Tuple headSnakePos;
 	 int sizeSnake=3;
-	 long speed = 50;
+	 long speed = 300; //in milliseconds
 	 public static int directionSnake ;
 
 	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
 	 Tuple foodPosition;
+	 private Window window;
 	 
 	 //Constructor of ControlleurThread 
-	 ThreadsController(Tuple positionDepart){
+	 ThreadsController(Tuple positionDepart, Window window){
 		//Get all the threads
 		Squares=Window.Grid;
 		
@@ -26,6 +27,7 @@ public class ThreadsController extends Thread {
 		
 		foodPosition= new Tuple(Window.height-1,Window.width-1);
 		spawnFood(foodPosition);
+		this.window = window;
 
 	 }
 	 
@@ -62,6 +64,7 @@ public class ThreadsController extends Thread {
 		 boolean eatingFood = posCritique.getX()==foodPosition.y && posCritique.getY()==foodPosition.x;
 		 if(eatingFood){
 			 System.out.println("Yummy!");
+			 Window.playEatSound();
 			 sizeSnake=sizeSnake+1;
 			 	foodPosition = getValAleaNotInSnake();
 
@@ -72,6 +75,7 @@ public class ThreadsController extends Thread {
 	 //Stops The Game
 	 private void stopTheGame(){
 		 System.out.println("COLISION! \n");
+		 window.onGameOver();
 		 while(true){
 			 pauser();
 		 }
