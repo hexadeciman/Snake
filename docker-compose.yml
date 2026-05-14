@@ -1,4 +1,4 @@
-version: '3.8'
+version: '4.8'
 services:
   java-app:
     build: .
